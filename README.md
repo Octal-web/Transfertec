@@ -1,66 +1,188 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<div align="center">
+  <h1>Transfertec</h1>
+</div>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+O projeto consistiu no desenvolvimento de um site institucional moderno e responsivo para a marca **Transfertec**, com foco em apresentar os segmentos que aborda. Em ambos segmentos, é representado sobre a história, serviços e tudo mais que compõem a marca.
+  
+---
 
-## About Laravel
+## Índice
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- [Sobre](#sobre)
+- [Visualização](#visualizacao)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [Arquitetura do Projeto](#arquitetura-do-projeto)
+- [Como Executar o Projeto](#como-executar-o-projeto)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+<h2 id="sobre">Sobre:</h2>
 
-## Learning Laravel
+Através do painel de gerenciamento (manager) para cada segmento, é possível:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- Gerenciar conteúdos de todas as páginas daquele segmento
+- Configurar SEO para cada página
+- Alterar a política de privacidade
+- Alterar conteúdos para cada idioma, sendo eles: inglês, espanhol e português - BR
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+E através do site para o público:
 
-## Laravel Sponsors
+- Visualizar as páginas:
+    - Segmento vinho:
+        - **Home**: apresenta um pouco sobre as soluções, compromisso, produtos e parceiros
+        - **Sobre**: conta sobre a história da marca, valores e tudo que a compõe 
+        - **Equipamentos**: traz os equipamentos separados por tipo
+        - **Insumos e Produtos**: assim como os equipamentos, traz os produtos e insumos no mesmo formato
+        - **Engenharia**: apresenta sobre o processo que envolve esse segmento
+        - **Contato**: localidade, informações e formulário para envio de email
+    - Segmento engenharia:
+        - **Home**: apresenta um pouco sobre a experiência, projetos e clientes
+        - **Sobre**: conta sobre a história da marca, valores e tudo que a compõe 
+        - **Setores de Atuação**: dividido por indústrias, cada uma traz um resumo daquele segmento
+        - **Serviços**: apresenta o processo de solução e video do processo
+        - **News**: separado por categorias, cada uma traz uma notícia mais recente
+        - **Contato**: localidade, informações e formulário para envio de email
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+<h2 id="visualizacao">Visualização:</h2>
 
-## Contributing
+<img width="400" alt="image segmentos" src="https://github.com/user-attachments/assets/a6d2d4be-f6ce-4939-a0a6-bf2cc324f735" />
+<img width="400" alt="image banner vinho segmento" src="https://github.com/user-attachments/assets/bb502114-5cac-4764-9c2d-d9e6baf7cfc7" />
+<img width="400" alt="image banner outros segmentos" src="https://github.com/user-attachments/assets/f4468f86-1442-43be-bace-12a7c41c5652" />
+<img width="400" alt="image footer vinho segmento" src="https://github.com/user-attachments/assets/00820651-7d73-4770-9761-15fd1f191791" />
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+<h2 id="tecnologias-utilizadas">Tecnologias Utilizadas:</h2>
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Back-end:
+- **Laravel (^12.0)**: framework PHP para construção do projeto, gerenciamento de rotas, autenticação e etc.
+- **PHP (^8.2)**: linguagem de desenvolvimento
+- **Laravel Sanctum (^4.0)**: autenticação e proteção de rotas
+- **Inertia.js (^2.0)**: integração entre backend Laravel e frontend React sem necessidade de API tradicional
+- **Laravel Localization (^2.2)**: gerenciamennto de idiomas e rotas traduzidas
+- **Ziggy (^2.0)**: compartilhamento de rotas Laravel diretamente no frontend React
+- **Laravel Breeze (^2.2)**: estrutura inicial de autenticação e gerenciamento de usuários
+- **Laravel Tinker (^2.9)**: ferramenta para testes e execução de comandos no ambiente
+- **Laravel PT-BR Validator (*)**: validações adaptadas para formato brasileiro
+- **Laravel Sail (^1.41)**: ambiente Docker para desenvolvimento local
 
-## Security Vulnerabilities
+### Front-end:
+- **React (^18.2.0)**: biblioteca para construção de interfaces
+- **Inertia React (^2.0.0)**: integração entre Laravel e React sem necessidade de API REST tradicional
+- **Vite (^6.2.4)**: ferramenta de build e desenvolvimento rápido
+- **Laravel Vite Plugin (^1.2.0)**: integração entre Laravel e Vite
+- **Tailwind (^3.2.1)**: framework para estilização
+- **Tailwind Forms (^0.5.3)**: plugin para estilização de formulários
+- **PostCSS (^8.4.31)**: processador de CSS usado junto do Tailwind
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### UI e experiência do usuário:
+- **Font Awesome React (^0.2.2)**: biblioteca de ícones para interface
+- **Headless UI (^2.0.0)**: componentes acessíveis e sem estilos pré-definidos
+- **Swiper (^11.2.6)**: criação de sliders e carrosseis
+- **Gsap (^3.12.7)**: biblioteca para animações
+- **Lenis (^1.0.42)**: implementação de scroll suave
+- **React Select (^5.10.1)**: select customizado
 
-## License
+### Tabelas, dados e formulários:
+- **React Input Mask (^2.0.4)**: máscaras para inputs como CPF e telefones
+- **React SortableJS (^6.1.4)**: drag and drop para ordenação de elementos
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Upload e manipulação de arquivos:
+- **React Dropzone (^14.3.8)**: upload de arquivos via drag and drop
+- **React Image Crop (^11.0.7)**: recorte de imagens no navegador
+- **browser-image-compression (^2.0.2)**: compressão de imagens
+
+### Editor de texto:
+- **Tiptap (^2.11.7)**: editor de texto altamente cuustimizável
+- Extensões utilizadas:
+  - **Image**: suporte para imagens
+  - **Link**: gerenciamento de links
+  - **Underline**: sublinhado no texto
+  - **Table**: criação de tabelas
+  - **Table Row:** gerenciamento de linhas
+  - **Table Header**: cabeçalhos de tabelas
+  - **Table Cell**: células de tabelas
+  - **Text**: manipulação de conteúdo textual
+  - **List Item**: manipulação de listas
+  - **Figure Extension**: suporte a figuras
+  - **Starter Kit**: funcionalidades básicas do editor
+ 
+
+---
+
+<h2 id="arquitetura-do-projeto">Arquitetura principal do Projeto:</h2>
+
+```bash
+Transfertec
+│
+├── app
+│   ├── Http
+│   │   ├── Controllers    # Controladores responsáveis pelas requisições e retornar respostas (separado por Engenharia e Enologia)
+│   │   ├── Middleware     # Interceptação, autenticação e tratamento de requisições
+│   │   ├── Requests       # Validação e autorização de formulários e requisições (separado por Engenharia e Enologia)
+│   ├── Models             # Representação das tabelas do banco (Eloquent)
+│   ├── Providers          # Configuração de pacotes
+├── bootstrap              # Inicialização do framework
+├── config                 # Arquivos de configuração
+├── database               # Migrations, seeds e factories
+├── public                 # Diretório público acessível pelo navegador
+├── resources              # Frontend e recursos
+│   ├── css                # Estilização 
+│   ├── js                 # Componentes, páginas, hooks e layouts (separados por Engenharia e Enologia)
+│   ├── views              # Templates e views do Laravel/Inertia
+├── routes                 # Definição das rotas web (separados por Engenharia e Enologia)
+├── storage                # Arquivos gerados (logs, cache e etc.)
+├── tests
+│
+
+```
+
+---
+
+<h2 id="como-executar-o-projeto">Como Executar o Projeto:</h2>
+
+1. Clone o repositório:
+
+```bash
+git clone https://github.com/Octal-web/Transfertec.git
+cd Transfertec
+```
+
+2. Instale as dependências do Front-end:
+
+```bash
+npm install
+```
+
+3. Instale as dependências do Back-end:
+
+```bash
+composer install
+```
+
+4. Configure o ambiente
+
+Crie o arquivo .env:
+
+```bash
+cp .env.example .env
+```
+
+Gere a chave da aplicação:
+```bash
+php artisan key:generate
+```
+
+Configure o banco de dados SQL e preencha com o acesso no .env
+
+5. Rode o projeto:
+```bash
+npm run dev
+php artisan serve
+```
+
+
