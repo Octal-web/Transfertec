@@ -92,13 +92,13 @@ export const EquipmentItems = ({ items, currentSub, showSubName }) => {
                                 <div className="grid md:grid-cols-2 gap-12 md:gap-16">
                                     <div id={item1.slug}>
                                         {showSubName && !(item1.equipamentos.length === 1 && item1.nome === currentSub.nome) && (
-                                            <h3 className="text-2xl sm:text-3xl text-center mb-6 md:mb-12">{item.nome}</h3>
+                                            <h3 className="text-2xl sm:text-3xl text-center mb-6 md:mb-12">{item1.nome}</h3>
                                         )}
                                         {item1.equipamentos.length ? (
                                             <div className="flex flex-wrap justify-center gap-4">
                                                 {item1.equipamentos.map((equipamento) => (
-                                                    <div className="w-[calc((100%-16px)/2)]">
-                                                        <EquipmentItem key={equipamento.id} item={equipamento} />
+                                                    <div key={equipamento.id} className="w-[calc((100%-16px)/2)]">
+                                                        <EquipmentItem item={equipamento} />
                                                     </div>
                                                 ))}
                                             </div>
@@ -107,13 +107,13 @@ export const EquipmentItems = ({ items, currentSub, showSubName }) => {
 
                                     <div className={`relative before:absolute before:-bottom-20 before:-top-24 before:w-[calc(100vw_+_2em)] before:-left-8 ${groupIndex % 2 === 0 ? 'before:bg-gray-100' : 'before:bg-gray-50'}`} id={item2.slug}>
                                         {showSubName && !(item2.equipamentos.length === 1 && item2.nome === currentSub.nome) && (
-                                            <h3 className="text-2xl sm:text-3xl text-center mb-6 md:mb-12">{item.nome}</h3>
+                                            <h3 className="text-2xl sm:text-3xl text-center mb-6 md:mb-12">{item2.nome}</h3>
                                         )}
                                         {item2.equipamentos.length ? (
                                             <div className="relative flex flex-wrap justify-center gap-4">
                                                 {item2.equipamentos.map((equipamento) => (
-                                                    <div className="w-[calc((100%-16px)/2)]">
-                                                        <EquipmentItem key={equipamento.id} item={equipamento} />
+                                                    <div key={equipamento.id} className="w-[calc((100%-16px)/2)]">
+                                                        <EquipmentItem item={equipamento} />
                                                     </div>
                                                 ))}
                                             </div>
