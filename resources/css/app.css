@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#nprogress .bar {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+
+form .form-eng-select__control {
+    @apply rounded !border-eng-tertiary border-opacity-100 bg-transparent p-1 font-normal text-black outline-none transition hover:ring-0 !shadow-none disabled:cursor-default;
+}
+form .form-eng-select__control--is-focused,
+form .form-eng-select__hidden__control--is-focused {
+    @apply !border-eng-primary focus:border-eng-tertiary;
+}
+form .form-eng-select__placeholder {
+    @apply text-gray-500 text-opacity-70;
+}
+form .form-eng-select__indicator-separator,
+form .form-eng-select__hidden__indicator-separator {
+    @apply hidden;
+}
+form .form-eng-select__option {
+    @apply text-sm;
+}
+form .form-eng-select__indicator {
+    @apply text-eng-primary;
+}
+
+/* ADMIN */
+
+@layer utilities {
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+}
+
+.eng-company-logo {
+    background-image: url(/eng/admin/img/logo-alt.png);
+}
+.menu-aside:hover .eng-company-logo {
+    @apply w-30;
+    background-image: url(/eng/admin/img/logo.png);
+}
+.eno-company-logo {
+    background-image: url(/eno/admin/img/logo-alt.png);
+}
+.menu-aside:hover .eno-company-logo {
+    @apply w-30;
+    background-image: url(/eno/admin/img/logo.png);
+}
+.menu-aside:not(:hover) .submenu {
+	@apply max-h-0;
+}
+
+:root {
+    --ck-border-radius: 0.5rem !important;
+    --ck-color-focus-border: rgb(22 22 22) !important;
+    --ck-inner-shadow: none !important;
+}
+.ck-rounded-corners .ck-sticky-panel__content{
+    border-radius: 0.5rem;
+}
+.ck.ck-editor__main > .ck-editor__editable {
+   @apply min-h-40;
+}
+.ck.ck-balloon-panel.ck-balloon-panel_visible {
+	display: none !important;
+}
+
+table .sortable-fallback {
+	@apply table bg-slate-50;
+}
+
+.sortable-ghost {
+	@apply relative;
+}
+.sortable-ghost::after {
+	@apply bg-white content-[''] absolute inset-0 border border-2 border-slate-600 border-dashed z-10;
+}
+
+.sortable-fallback {
+  background: #fff;
+}
+
+.bg-checkered {
+    background-image: linear-gradient(45deg, #ccc 25%, transparent 25%),
+                      linear-gradient(-45deg, #ccc 25%, transparent 25%),
+                      linear-gradient(45deg, transparent 75%, #ccc 75%),
+                      linear-gradient(-45deg, transparent 75%, #ccc 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+form .admin-eng-select__control {
+    @apply rounded-lg !border-gray-300 border-opacity-100 bg-transparent p-1 font-normal text-sm text-black outline-none transition hover:ring-0 !shadow-none disabled:cursor-default;
+}
+form .admin-eng-select__control--is-focused,
+form .admin-eng-select__hidden__control--is-focused {
+    @apply !border-eng-tertiary focus:border-eng-tertiary;
+}
+form .admin-eng-select__indicator-separator,
+form .admin-eng-select__hidden__indicator-separator {
+    @apply hidden;
+}
+form .admin-eng-select__option {
+    @apply text-sm;
+}
+
+
+form .admin-eno-select__control {
+    @apply rounded-lg !border-gray-300 border-opacity-100 bg-transparent p-1 font-normal text-sm text-black outline-none transition hover:ring-0 !shadow-none disabled:cursor-default;
+}
+form .admin-eno-select__control--is-focused,
+form .admin-eno-select__hidden__control--is-focused {
+    @apply !border-eno-secondary focus:border-eno-secondary;
+}
+form .admin-eno-select__indicator-separator,
+form .admin-eno-select__hidden__indicator-separator {
+    @apply hidden;
+}
+form .admin-eno-select__option {
+    @apply text-sm;
+}
