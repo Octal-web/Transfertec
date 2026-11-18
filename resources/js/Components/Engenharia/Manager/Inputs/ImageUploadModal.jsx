@@ -75,7 +75,7 @@ const joinPath = (...parts) =>
     parts.filter(Boolean).join("/").replace(/\/+/g, "/");
 
 const fileUrl = (...parts) =>
-    "/files/" + joinPath(...parts).split("/").map(encodeURIComponent).join("/");
+    "/eng/content/files/uploads/" + joinPath(...parts).split("/").map(encodeURIComponent).join("/");
 
 function FileIcon({ file, thumbUrl }) {
     const ext = file.name.split(".").pop().toLowerCase();
