@@ -13,6 +13,7 @@ use App\Http\Controllers\Engenharia\ServicosController as EngenhariaServicosCont
 use App\Http\Controllers\Engenharia\ContatoController as EngenhariaContatoController;
 use App\Http\Controllers\Engenharia\NewsController as EngenhariaNewsController;
 use App\Http\Controllers\Engenharia\PoliticasController as EngenhariaPoliticasController;
+use App\Http\Controllers\SitemapController;
 
 use App\Http\Controllers\Engenharia\Manager\UsuariosController as EngenhariaUsuariosController;
 use App\Http\Controllers\Engenharia\Manager\PaginasController as EngenhariaManagerPaginasController;
@@ -83,6 +84,8 @@ use App\Http\Controllers\Enologia\Manager\PoliticasController as EnologiaManager
 
 Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
     Route::get('/', [MarcasController::class, 'index'])->name('Marcas.index');
+
+    Route::get('/sitemap.xml', [SitemapController::class, '__invoke'])->name('Sitemap.index');
 
     Route::prefix('/engenharia')->group(function () {
         Route::get('/', [EngenhariaHomeController::class, 'index'])->name('Engenharia.Home.index');
