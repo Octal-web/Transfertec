@@ -1,12 +1,18 @@
-import React, { useCallback, useState } from 'react';
-import { useDropzone } from 'react-dropzone';
-import imageCompression from 'browser-image-compression';
+import imageCompression from "browser-image-compression";
+import { useCallback, useEffect, useState } from "react";
+import { useDropzone } from "react-dropzone";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCloudUploadAlt } from '@fortawesome/free-solid-svg-icons';
+import {
+    faCheckCircle,
+    faCloudUploadAlt,
+    faSpinner,
+    faTimesCircle,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export const ImageUploader = ({ onUpload, crop, size }) => {
+export const ImageUploader = ({ onUpload, crop, size, uploadStatus }) => {
     const [error, setError] = useState(null);
+    const [queue, setQueue] = useState([]);
 
     const resizeAndCropImage = async (file) => {
         try {
@@ -23,8 +29,8 @@ export const ImageUploader = ({ onUpload, crop, size }) => {
 
             return new Promise((resolve) => {
                 img.onload = () => {
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
+                    const canvas = document.createElement("canvas");
+                    const ctx = canvas.getContext("2d");
 
                     const cropWidth = size.largura ?? 1600;
                     const cropHeight = size.altura ?? 900;
@@ -33,7 +39,7 @@ export const ImageUploader = ({ onUpload, crop, size }) => {
 
                     const ratio = Math.min(
                         img.width / cropWidth,
-                        img.height / cropHeight
+                        img.height / cropHeight,
                     );
 
                     const cropX = (img.width - cropWidth * ratio) / 2;
@@ -48,50 +54,153 @@ export const ImageUploader = ({ onUpload, crop, size }) => {
                         0,
                         0,
                         cropWidth,
-                        cropHeight
+                        cropHeight,
                     );
 
-                    canvas.toBlob((blob) => {
-                        resolve({ blob, originalFile: file });
-                    }, 'image/jpeg', 1.0);
+                    canvas.toBlob(
+                        (blob) => {
+                            resolve({ blob, originalFile: file });
+                        },
+                        "image/jpeg",
+                        1.0,
+                    );
                 };
             });
         } catch (error) {
-            console.error('Error resizing image:', error);
-            setError('Erro ao redimensionar a imagem.');
+            console.error("Error resizing image:", error);
+            setError("Erro ao redimensionar a imagem.");
             return null;
         }
     };
 
-    const onDrop = useCallback(async (acceptedFiles) => {
-        setError(null);
-        const processedImages = await Promise.all(
-            acceptedFiles.map(async (file) => {
-                const { blob, originalFile } = await resizeAndCropImage(file);
-                return crop ? { original: originalFile } : { resized: blob, original: originalFile };
-            })
+    const onDrop = useCallback(
+        async (acceptedFiles) => {
+            setError(null);
+
+            const newQueueItems = acceptedFiles.map((file) => ({
+                id: `${file.name}-${file.lastModified}-${Math.random().toString(36).slice(2)}`,
+                name: file.name,
+                status: "processando",
+            }));
+            setQueue((prev) => [...prev, ...newQueueItems]);
+
+            const processedImages = await Promise.all(
+                acceptedFiles.map(async (file) => {
+                    const { blob, originalFile } =
+                        await resizeAndCropImage(file);
+                    return crop
+                        ? { original: originalFile }
+                        : { resized: blob, original: originalFile };
+                }),
+            );
+
+            setQueue((prev) =>
+                prev.map((item) =>
+                    newQueueItems.some((n) => n.id === item.id)
+                        ? { ...item, status: "enviando" }
+                        : item,
+                ),
+            );
+
+            onUpload(processedImages);
+        },
+        [onUpload, crop],
+    );
+
+    useEffect(() => {
+        if (!uploadStatus || uploadStatus === "idle") return;
+
+        setQueue((prev) =>
+            prev.map((item) =>
+                item.status === "enviando"
+                    ? { ...item, status: uploadStatus }
+                    : item,
+            ),
         );
 
-        onUpload(processedImages);
-    }, [onUpload]);
+        const timer = setTimeout(() => {
+            setQueue((prev) =>
+                prev.filter(
+                    (item) =>
+                        item.status !== "sucesso" && item.status !== "erro",
+                ),
+            );
+        }, 3000);
+
+        return () => clearTimeout(timer);
+    }, [uploadStatus]);
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
-        'image/png': ['.png'],
-        'image/jpg': ['.jpg'],
-        'image/jpeg': ['.jpeg'],
+        accept: {
+            "image/png": [".png"],
+            "image/jpg": [".jpg"],
+            "image/jpeg": [".jpeg"],
+        },
     });
 
+    const statusIcon = {
+        processando: (
+            <FontAwesomeIcon icon={faSpinner} spin className="text-gray-400" />
+        ),
+        enviando: (
+            <FontAwesomeIcon icon={faSpinner} spin className="text-blue-500" />
+        ),
+        sucesso: (
+            <FontAwesomeIcon icon={faCheckCircle} className="text-green-500" />
+        ),
+        erro: <FontAwesomeIcon icon={faTimesCircle} className="text-red-500" />,
+    };
+
+    const statusLabel = {
+        processando: "Processando",
+        enviando: "Enviando",
+        sucesso: "Concluído",
+        erro: "Falhou",
+    };
+
     return (
-        <div {...getRootProps()} className="flex flex-col justify-center items-center border-2 border-dashed border-gray-400 p-6 rounded-md cursor-pointer">
-            <input {...getInputProps()} />
-            {isDragActive ? (
-                <p className="text-gray-500 font-bold text-center mb-3">Solte as imagens aqui ...</p>
-            ) : (
-                <p className="text-gray-500 font-bold text-center mb-3">Arraste e solte os arquivos aqui para enviar</p>
+        <div>
+            <div
+                {...getRootProps()}
+                className="flex flex-col justify-center items-center border-2 border-dashed border-gray-400 p-6 rounded-md cursor-pointer"
+            >
+                <input {...getInputProps()} />
+                {isDragActive ? (
+                    <p className="text-gray-500 font-bold text-center mb-3">
+                        Solte as imagens aqui ...
+                    </p>
+                ) : (
+                    <p className="text-gray-500 font-bold text-center mb-3">
+                        Arraste e solte os arquivos aqui para enviar
+                    </p>
+                )}
+                <FontAwesomeIcon
+                    icon={faCloudUploadAlt}
+                    size="3x"
+                    className="text-gray-400 my-2"
+                />
+                {error && <p className="text-red-500">{error}</p>}
+            </div>
+
+            {queue.length > 0 && (
+                <ul className="mt-3 space-y-1">
+                    {queue.map((item) => (
+                        <li
+                            key={item.id}
+                            className="flex items-center gap-2 text-sm px-2 py-1 rounded bg-gray-50 transition-opacity duration-500"
+                        >
+                            {statusIcon[item.status]}
+                            <span className="truncate flex-1" title={item.name}>
+                                {item.name}
+                            </span>
+                            <span className="text-xs text-gray-400">
+                                {statusLabel[item.status]}
+                            </span>
+                        </li>
+                    ))}
+                </ul>
             )}
-            <FontAwesomeIcon icon={faCloudUploadAlt} size="3x" className="text-gray-400 my-2" />
-            {error && <p className="text-red-500">{error}</p>}
         </div>
     );
 };

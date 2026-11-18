@@ -1,11 +1,21 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef } from "react";
 
-import { Link } from '@inertiajs/react';
+import { Link } from "@inertiajs/react";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export const MenuItem = ({ id, label, icon, href, subMenu, isOpen, onToggle, controller, controllers = [] }) => {
+export const MenuItem = ({
+    id,
+    label,
+    icon,
+    href,
+    subMenu,
+    isOpen,
+    onToggle,
+    controller,
+    controllers = [],
+}) => {
     const submenuRef = useRef(null);
 
     if (subMenu) {
@@ -13,13 +23,14 @@ export const MenuItem = ({ id, label, icon, href, subMenu, isOpen, onToggle, con
             <li>
                 <button
                     aria-current="false"
-                    className="group relative flex items-center w-full px-5 py-4 font-medium text-sm text-white duration-300 ease-in-out hover:bg-white hover:bg-opacity-10"
+                    className="group relative flex items-center w-full px-4 py-3 xl:px-5 xl:py-4 font-medium text-sm text-white duration-300 ease-in-out bg-white hover:bg-opacity-10"
                     onClick={() => onToggle(id)}
                 >
-                    <FontAwesomeIcon icon={icon} className="text-lg mr-5 w-6" /> {label}
+                    <FontAwesomeIcon icon={icon} className="text-lg mr-5 w-6" />{" "}
+                    {label}
                     <FontAwesomeIcon
                         icon={faChevronDown}
-                        className={`absolute right-4 top-1/2 -translate-y-1/2 text-sm transition-transform ${isOpen ? 'rotate-180' : ''}`}
+                        className={`absolute right-4 top-1/2 -translate-y-1/2 text-sm transition-transform ${isOpen ? "rotate-180" : ""}`}
                     />
                     {controllers.includes(controller) && (
                         <div className="absolute left-0 top-0 bottom-0 w-1 my-3 bg-white"></div>
@@ -27,14 +38,14 @@ export const MenuItem = ({ id, label, icon, href, subMenu, isOpen, onToggle, con
                 </button>
                 <div
                     ref={submenuRef}
-                    className={`submenu overflow-hidden transition-max-height duration-300 ease-in-out ${isOpen ? 'max-h-40' : 'max-h-0'}`}
+                    className={`submenu overflow-hidden transition-max-height duration-300 ease-in-out ${isOpen ? "max-h-52" : "max-h-0"}`}
                 >
                     <ul>
                         {subMenu.map((subItem, index) => (
                             <li key={index}>
                                 <Link
                                     aria-current="page"
-                                    className="relative pl-16 pr-2 py-3 block font-medium text-sm text-white duration-300 ease-in-out bg-black hover:bg-white hover:bg-opacity-20"
+                                    className="relative pl-14 xl:pl-16 pr-2 py-2 xl:py-3 block font-medium text-sm text-white duration-300 ease-in-out bg-black hover:bg-white hover:bg-opacity-20"
                                     href={subItem.href}
                                 >
                                     {subItem.label}
@@ -51,9 +62,10 @@ export const MenuItem = ({ id, label, icon, href, subMenu, isOpen, onToggle, con
                 <Link
                     href={href}
                     aria-current="page"
-                    className="group relative flex items-center px-5 py-4 font-medium text-sm text-white duration-300 ease-in-out hover:bg-white hover:bg-opacity-10"
+                    className="group relative flex items-center px-4 py-3 xl:px-5 xl:py-4 font-medium text-sm text-white duration-300 ease-in-out hover:bg-white hover:bg-opacity-10"
                 >
-                    <FontAwesomeIcon icon={icon} className="text-lg mr-5 w-6" /> {label}
+                    <FontAwesomeIcon icon={icon} className="text-lg mr-5 w-6" />{" "}
+                    {label}
                     {controllers.includes(controller) && (
                         <div className="absolute left-0 top-0 bottom-0 w-1 my-3 bg-white"></div>
                     )}

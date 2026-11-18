@@ -1,18 +1,24 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useForm } from '@inertiajs/react';
-import ReactCrop, { centerCrop, makeAspectCrop } from 'react-image-crop';
-import 'react-image-crop/dist/ReactCrop.css';
+import { useForm } from "@inertiajs/react";
+import { useEffect, useRef, useState } from "react";
+import ReactCrop, { centerCrop, makeAspectCrop } from "react-image-crop";
+import "react-image-crop/dist/ReactCrop.css";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave } from '@fortawesome/free-solid-svg-icons';
+import { faSave } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export const CropModal = ({ closeModal, imageUrl, imageId, cropRoute, size = { largura: 800, altura: 600 } }) => {
+export const CropModal = ({
+    closeModal,
+    imageUrl,
+    imageId,
+    cropRoute,
+    size = { largura: 800, altura: 600 },
+}) => {
     const [crop, setCrop] = useState();
     const [completedCrop, setCompletedCrop] = useState(null);
     const imageRef = useRef(null);
-    
+
     const { data, setData, post, processing } = useForm({
-        img: '',
+        img: "",
     });
 
     const onImageLoad = async (e) => {
@@ -22,15 +28,15 @@ export const CropModal = ({ closeModal, imageUrl, imageId, cropRoute, size = { l
         const initialCrop = centerCrop(
             makeAspectCrop(
                 {
-                    unit: '%',
+                    unit: "%",
                     width: 90,
                 },
                 size.largura / size.altura,
                 width,
-                height
+                height,
             ),
             width,
-            height
+            height,
         );
 
         setCrop(initialCrop);
@@ -38,7 +44,7 @@ export const CropModal = ({ closeModal, imageUrl, imageId, cropRoute, size = { l
 
         const croppedBlob = await getCroppedImg(initialCrop);
         if (croppedBlob) {
-            setData('img', croppedBlob);
+            setData("img", croppedBlob);
         }
     };
 
@@ -50,7 +56,7 @@ export const CropModal = ({ closeModal, imageUrl, imageId, cropRoute, size = { l
         setCompletedCrop(crop);
         const croppedBlob = await getCroppedImg(crop);
         if (croppedBlob) {
-            setData('img', croppedBlob);
+            setData("img", croppedBlob);
         }
     };
 
@@ -58,16 +64,16 @@ export const CropModal = ({ closeModal, imageUrl, imageId, cropRoute, size = { l
         if (!completedCrop || !imageRef.current) return;
 
         const image = imageRef.current;
-        const canvas = document.createElement('canvas');
-        const extension = imageUrl.split('.').pop().toLowerCase();
-        
+        const canvas = document.createElement("canvas");
+        const extension = imageUrl.split(".").pop().toLowerCase();
+
         const scaleX = image.naturalWidth / image.width;
         const scaleY = image.naturalHeight / image.height;
-        const ctx = canvas.getContext('2d');
-        
+        const ctx = canvas.getContext("2d");
+
         canvas.width = size.largura;
         canvas.height = size.altura;
-        
+
         ctx.drawImage(
             image,
             completedCrop.x * scaleX,
@@ -77,13 +83,13 @@ export const CropModal = ({ closeModal, imageUrl, imageId, cropRoute, size = { l
             0,
             0,
             size.largura,
-            size.altura
+            size.altura,
         );
-        
+
         return new Promise((resolve) => {
-            canvas.toBlob(blob => {
+            canvas.toBlob((blob) => {
                 if (!blob) {
-                    console.error('Canvas is empty');
+                    console.error("Canvas is empty");
                     return;
                 }
                 blob.name = `croppedImage.${extension}`;
@@ -100,32 +106,41 @@ export const CropModal = ({ closeModal, imageUrl, imageId, cropRoute, size = { l
             },
             onError: (errors) => {
                 console.error(errors);
-            }
+            },
         });
     };
 
     useEffect(() => {
         const handleEscKey = (event) => {
-            if (event.key === 'Escape') {
+            if (event.key === "Escape") {
                 closeModal();
             }
         };
 
-        document.addEventListener('keydown', handleEscKey);
+        document.addEventListener("keydown", handleEscKey);
         return () => {
-            document.removeEventListener('keydown', handleEscKey);
+            document.removeEventListener("keydown", handleEscKey);
         };
     }, [closeModal]);
 
     return (
         <div className="sort-ignore fixed inset-0 z-50 overflow-y-auto">
             <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                <div className="fixed inset-0 transition-opacity" aria-hidden="true" onClick={closeModal}>
+                <div
+                    className="fixed inset-0 transition-opacity"
+                    aria-hidden="true"
+                    onClick={closeModal}
+                >
                     <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
                 </div>
-                
-                <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-                
+
+                <span
+                    className="hidden sm:inline-block sm:align-middle sm:h-screen"
+                    aria-hidden="true"
+                >
+                    &#8203;
+                </span>
+
                 <div className="animate-fade-in-down [animation-duration:_0.1s] inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full ">
                     <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                         <div className="sm:flex sm:items-start">
@@ -154,12 +169,15 @@ export const CropModal = ({ closeModal, imageUrl, imageId, cropRoute, size = { l
                     <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                         <button
                             type="button"
-                            className="block relative w-fit rounded-lg border border-gray-300 px-3 py-2 cursor-pointer transition-all hover:bg-slate-200"
+                            className="block relative w-fit border border-gray-300 px-3 py-2 cursor-pointer transition-all hover:bg-slate-200"
                             onClick={handleSaveCrop}
                             disabled={processing}
                         >
-                            <FontAwesomeIcon icon={faSave} className="text-slate-700 mr-2" />
-                            {processing ? 'Salvando...' : 'Salvar'}
+                            <FontAwesomeIcon
+                                icon={faSave}
+                                className="text-slate-700 mr-2"
+                            />
+                            {processing ? "Salvando..." : "Salvar"}
                         </button>
                         <button
                             type="button"
