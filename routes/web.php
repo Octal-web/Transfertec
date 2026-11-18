@@ -84,7 +84,7 @@ use App\Http\Controllers\Enologia\Manager\PoliticasController as EnologiaManager
 Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
     Route::get('/', [MarcasController::class, 'index'])->name('Marcas.index');
 
-    Route::prefix('/engenharia')->group(function() {
+    Route::prefix('/engenharia')->group(function () {
         Route::get('/', [EngenhariaHomeController::class, 'index'])->name('Engenharia.Home.index');
 
         Route::get('/cases', [EngenhariaCasesController::class, 'index'])->name('Engenharia.Cases.index');
@@ -108,7 +108,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::get('/politica-de-privacidade', [EngenhariaPoliticasController::class, 'privacidade'])->name('Engenharia.Politicas.privacidade');
     });
 
-    Route::prefix('/enologia')->group(function() {
+    Route::prefix('/enologia')->group(function () {
         Route::get('/', [EnologiaHomeController::class, 'index'])->name('Enologia.Home.index');
 
         Route::get('/sobre-nos', [EnologiaInstitucionalController::class, 'index'])->name('Enologia.Institucional.index');
@@ -119,7 +119,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::get('/insumos-e-produtos/download/{tipo}/{id}', [EnologiaInsumosController::class, 'download'])->name('Enologia.Insumos.download');
 
         Route::get('/automacao-de-processos', [EnologiaAutomacaoController::class, 'index'])->name('Enologia.Automacao.index');
-        
+
         Route::get('/consultoria', [EnologiaConsultoriaController::class, 'index'])->name('Enologia.Consultoria.index');
 
         Route::get('/equipamentos', [EnologiaEquipamentosController::class, 'index'])->name('Enologia.Equipamentos.index');
@@ -135,14 +135,14 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
     });
 });
 
-Route::prefix('/engenharia')->group(function() {
-    Route::prefix('/manager')->group(function() {
+Route::prefix('/engenharia')->group(function () {
+    Route::prefix('/manager')->group(function () {
         Route::get('/', [EngenhariaUsuariosController::class, 'login'])->name('Engenharia.Manager.Usuarios.login');
         Route::post('/', ['as' => 'engenharia.login', 'uses' => 'App\Http\Controllers\Engenharia\Manager\UsuariosController@authenticate']);
 
         Route::post('/usuarios/logout', [EngenhariaUsuariosController::class, 'logout'])->name('Engenharia.Manager.Usuarios.logout');
 
-        Route::group(['middleware' => ['auth:engenharia']], function() {
+        Route::group(['middleware' => ['auth:engenharia']], function () {
             Route::post('/paginas/editar/{id}', [EngenhariaManagerPaginasController::class, 'editarAction'])->name('Engenharia.Manager.Paginas.editar');
 
             Route::post('/conteudos/editar/{id}', [EngenhariaManagerConteudosController::class, 'editarAction'])->name('Engenharia.Manager.Conteudos.editar');
@@ -150,12 +150,20 @@ Route::prefix('/engenharia')->group(function() {
 
             Route::get('/imagens/{id}', [EngenhariaManagerImagensController::class, 'conteudo'])->name('Engenharia.Manager.Imagens.conteudo');
             Route::post('/imagens/conteudo/adicionar/{id}', [EngenhariaManagerImagensController::class, 'novo'])->name('Engenharia.Manager.Imagens.novo');
-            
+
             Route::post('/imagens/conteudo/ordenar/{id}', [EngenhariaManagerImagensController::class, 'ordenar'])->name('Engenharia.Manager.Imagens.ordenar');
             Route::post('/imagens/conteudo/visibilidade/{id}', [EngenhariaManagerImagensController::class, 'visibilidade'])->name('Engenharia.Manager.Imagens.visibilidade');
             Route::post('/imagens/conteudo/excluir/{id}', [EngenhariaManagerImagensController::class, 'excluir'])->name('Engenharia.Manager.Imagens.excluir');
 
-            Route::post('/enviar-imagem', [EngenhariaManagerFinderController::class, 'enviar'])->name('Engenharia.Manager.Finder.enviar');
+            // Route::post('/enviar-imagem', [EngenhariaManagerFinderController::class, 'enviar'])->name('Engenharia.Manager.Finder.enviar');
+
+
+            Route::get('/finder/list', [EngenhariaManagerFinderController::class, 'list'])->name('Engenharia.Manager.Finder.list');
+            Route::post('/finder/upload', [EngenhariaManagerFinderController::class, 'upload'])->name('Engenharia.Manager.Finder.upload');
+            Route::delete('/finder/delete', [EngenhariaManagerFinderController::class, 'delete'])->name('Engenharia.Manager.Finder.delete');
+            Route::post('/finder/rename', [EngenhariaManagerFinderController::class, 'rename'])->name('Engenharia.Manager.Finder.rename');
+            Route::post('/finder/folder', [EngenhariaManagerFinderController::class, 'createFolder'])->name('Engenharia.Manager.Finder.createFolder');
+            Route::post('/finder/move', [EngenhariaManagerFinderController::class, 'move'])->name('Engenharia.Manager.Finder.move');
 
 
             Route::get('/home', [EngenhariaManagerHomeController::class, 'index'])->name('Engenharia.Manager.Home.index');
@@ -315,14 +323,14 @@ Route::prefix('/engenharia')->group(function() {
     });
 });
 
-Route::prefix('/enologia')->group(function() {
-    Route::prefix('/manager')->group(function() {
+Route::prefix('/enologia')->group(function () {
+    Route::prefix('/manager')->group(function () {
         Route::get('/', [EnologiaUsuariosController::class, 'login'])->name('Enologia.Manager.Usuarios.login');
         Route::post('/', ['as' => 'enologia.login', 'uses' => 'App\Http\Controllers\Enologia\Manager\UsuariosController@authenticate']);
 
         Route::post('/usuarios/logout', [EnologiaUsuariosController::class, 'logout'])->name('Enologia.Manager.Usuarios.logout');
 
-        Route::group(['middleware' => ['auth:enologia']], function() {
+        Route::group(['middleware' => ['auth:enologia']], function () {
             Route::post('/paginas/editar/{id}', [EnologiaManagerPaginasController::class, 'editarAction'])->name('Enologia.Manager.Paginas.editar');
 
             Route::post('/conteudos/editar/{id}', [EnologiaManagerConteudosController::class, 'editarAction'])->name('Enologia.Manager.Conteudos.editar');
@@ -330,12 +338,17 @@ Route::prefix('/enologia')->group(function() {
 
             Route::get('/imagens/{id}', [EnologiaManagerImagensController::class, 'conteudo'])->name('Enologia.Manager.Imagens.conteudo');
             Route::post('/imagens/conteudo/adicionar/{id}', [EnologiaManagerImagensController::class, 'novo'])->name('Enologia.Manager.Imagens.novo');
-            
+
             Route::post('/imagens/conteudo/ordenar/{id}', [EnologiaManagerImagensController::class, 'ordenar'])->name('Enologia.Manager.Imagens.ordenar');
             Route::post('/imagens/conteudo/visibilidade/{id}', [EnologiaManagerImagensController::class, 'visibilidade'])->name('Enologia.Manager.Imagens.visibilidade');
             Route::post('/imagens/conteudo/excluir/{id}', [EnologiaManagerImagensController::class, 'excluir'])->name('Enologia.Manager.Imagens.excluir');
 
-            Route::post('/enviar-imagem', [EnologiaManagerFinderController::class, 'enviar'])->name('Enologia.Manager.Finder.enviar');
+            Route::get('/finder/list', [EnologiaManagerFinderController::class, 'list'])->name('Enologia.Manager.Finder.list');
+            Route::post('/finder/upload', [EnologiaManagerFinderController::class, 'upload'])->name('Enologia.Manager.Finder.upload');
+            Route::delete('/finder/delete', [EnologiaManagerFinderController::class, 'delete'])->name('Enologia.Manager.Finder.delete');
+            Route::post('/finder/rename', [EnologiaManagerFinderController::class, 'rename'])->name('Enologia.Manager.Finder.rename');
+            Route::post('/finder/folder', [EnologiaManagerFinderController::class, 'createFolder'])->name('Enologia.Manager.Finder.createFolder');
+            Route::post('/finder/move', [EnologiaManagerFinderController::class, 'move'])->name('Enologia.Manager.Finder.move');
 
 
             Route::get('/home', [EnologiaManagerHomeController::class, 'index'])->name('Enologia.Manager.Home.index');
@@ -382,7 +395,7 @@ Route::prefix('/enologia')->group(function() {
             Route::get('/acontecimentos/editar/{id}', [EnologiaManagerAcontecimentosController::class, 'editar'])->name('Enologia.Manager.Acontecimentos.editar');
             Route::post('/acontecimentos/editar/{id}', [EnologiaManagerAcontecimentosController::class, 'atualizar'])->name('Enologia.Manager.Acontecimentos.atualizar');
 
-            
+
             Route::get('/projetos', [EnologiaManagerProjetosController::class, 'index'])->name('Enologia.Manager.Projetos.index');
 
             Route::post('/etapas/ordenar', [EnologiaManagerEtapasController::class, 'ordenar'])->name('Enologia.Manager.Etapas.ordenar');
@@ -394,7 +407,7 @@ Route::prefix('/enologia')->group(function() {
             Route::get('/etapas/editar/{id}', [EnologiaManagerEtapasController::class, 'editar'])->name('Enologia.Manager.Etapas.editar');
             Route::post('/etapas/editar/{id}', [EnologiaManagerEtapasController::class, 'atualizar'])->name('Enologia.Manager.Etapas.atualizar');
 
-            
+
             Route::get('/insumos', [EnologiaManagerInsumosController::class, 'index'])->name('Enologia.Manager.Insumos.index');
 
             Route::post('/insumos/categorias/ordenar', [EnologiaManagerInsumosCategoriasController::class, 'ordenar'])->name('Enologia.Manager.Insumos.Categorias.ordenar');
