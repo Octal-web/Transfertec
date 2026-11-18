@@ -1,14 +1,9 @@
 import React from 'react';
 
 export const InputCheckbox = ({ title, name, checked, onChange }) => {
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        onChange(name, value);
-    };
-
     const handleCheckboxChange = (e) => {
         const { name, checked } = e.target;
-        onCheck(name, checked);
+        onChange(name, checked);
     };
 
     return (

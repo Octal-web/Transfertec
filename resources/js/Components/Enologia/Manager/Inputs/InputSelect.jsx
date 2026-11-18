@@ -1,25 +1,51 @@
-import React from 'react';
-import Select from 'react-select';
+import Select from "react-select";
+import { Label } from "./Label";
 
-export const InputSelect = ({ title, name, value, idioma, onChange, options }) => {
+export const InputSelect = ({
+    title,
+    name,
+    value,
+    idioma,
+    onChange,
+    options,
+    isMulti = false,
+}) => {
+    const flattenOptions = (groupedOptions) =>
+        groupedOptions.reduce((acc, group) => {
+            if (group.options) {
+                return acc.concat(group.options);
+            }
+            return acc.concat(group);
+        }, []);
+
+    const allOptions = flattenOptions(options);
+
     const handleChange = (selectedOption) => {
-        onChange(name, selectedOption ? selectedOption.value : null);
+        if (isMulti) {
+            const values = selectedOption
+                ? selectedOption.map((opt) => opt.value)
+                : [];
+            onChange(name, values);
+        } else {
+            onChange(name, selectedOption ? selectedOption.value : null);
+        }
     };
 
-    const selectedOption = options.find((option) => option.value === value);
+    const selectedOption = isMulti
+        ? allOptions.filter((option) => value?.includes(option.value))
+        : allOptions.find((option) => option.value === value);
 
     return (
         <div className="mb-6 [&_.admin-select\:__control]:p-3">
-            <div className="flex items-center mb-2">
-                <img src={`/eng/admin/img/flags/${idioma}.png`} className="w-5 mr-1" alt={`${idioma} flag`} />
-                <label className="block font-bold text-gray-500">{title}</label>
-            </div>
+            <Label title={title} idioma={idioma} />
+
             <Select
                 options={options}
                 value={selectedOption}
                 onChange={handleChange}
                 placeholder="Selecione uma opção..."
-                isSearchable={false}
+                isSearchable={allOptions.length > 10}
+                isMulti={isMulti}
                 classNamePrefix="admin-eno-select"
             />
         </div>

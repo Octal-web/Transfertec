@@ -21,7 +21,7 @@ export const InputCheckbox = ({ title, name, checked, onChange }) => {
                         checked={checked} 
                         onChange={handleCheckboxChange} 
                     />
-                    <label htmlFor="nova_aba" className="ml-2 block text-sm sm:text-base">Sim</label>
+                    <label htmlFor="nova_aba" className="ml-2 block text-sm sm:text-base text-black">Sim</label>
                 </div>
             </div>
         </div>
